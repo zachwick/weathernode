@@ -37,7 +37,7 @@ IPAddress ip(192, 168, 1, 103);
 
 // IP Address of the ShopNet server
 // In zwick's shop, the server has the following IP address
-IPAddress server(192,168,1,100);
+IPAddress server(192,168,10,156);
 // If hardcoding an IP for the server isn't what you want,
 // then you can use a hostname for the server and rely on DNS
 // char server[] = "doorman.local";
@@ -71,9 +71,13 @@ setup() {
 	}
 
   	// Set the IP of the weathernode manually since no DHCP
-	Ethernet.begin(mac, ip);
+	//Ethernet.begin(mac, ip);
+        // Start the ethernet stack and get an IP from DHCP
+        Ethernet.begin(mac);
+  
         Serial.print("Ethernet Object Started\n");
-
+        Serial.println(Ethernet.localIP());
+        
 	// Let the Ethernet Shield initialize
 	delay(1000);
 
@@ -114,8 +118,11 @@ loop() {
 		send_data();
 	}
 
-	// Delay for 5 seconds
-	delay(5000);
+	// Delay for 1 minute
+	delay(60000);
+
+        // Delay for 5 seconds
+        //delay(5000);
 }
 
 void
@@ -124,20 +131,28 @@ send_data() {
 	request_body += "\"temp\":\"" + String(int(tempf*10),DEC) + "\",";
 	request_body += "\"humidity\":\"" + String(int(humidity*10),DEC) + "\",";
 	request_body += "\"pressure\":\"" + String(int(pressure*10),DEC) + "\",";
-	request_body += "\"light\":\"" + String(int(light_lvl*10),DEC) + "\"}";
-  
-  	String request = String("POST /datapoints/ HTTP/1.1\n");
-        request += String("Host: 192.168.1.100\n");
+	request_body += "\"light\":\"" + String(int(light_lvl*10),DEC) + "\"}\n";
+        
+  	/*String request = String("POST /datapoints HTTP/1.1\n");
+        request += String("Host: 192.168.10.156\n");
         request += String("Connection: close\n");
-        request += String("Content-Type: application/json\n");
-        request += String("Content-Length: ") + String(request_body.length(),DEC) + "\n";
+        request += String("Content-Type: application/json;charset=UTF-8\n");
+        request += String("Content-Length: ") + String(request_body.length(),DEC) + "\n\n";
         request += request_body;
         
         Serial.println("\n\nSending Data:");
         Serial.println(request);
 	client.println(request);
-        client.stop();
-        
+        */
+ 
+        client.println("POST /datapoints/ HTTP/1.1");
+        client.println("Host: 192.168.10.156");
+        client.println("Connection: close");
+        client.println("Content-Type: application/json;charset=UTF-8");
+        client.println(String("Content-Length: ") + String(request_body.length(), DEC));
+        client.println();
+        client.println(request_body);        
+        client.stop();        
 }
 
 void
