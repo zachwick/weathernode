@@ -37,7 +37,7 @@ IPAddress ip(192, 168, 1, 103);
 
 // IP Address of the ShopNet server
 // In zwick's shop, the server has the following IP address
-IPAddress server(192,168,10,156);
+IPAddress server(192,168,10,247);
 // If hardcoding an IP for the server isn't what you want,
 // then you can use a hostname for the server and rely on DNS
 // char server[] = "doorman.local";
