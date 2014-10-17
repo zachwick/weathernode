@@ -119,10 +119,14 @@ loop() {
 	}
 
 	// Delay for 1 minute
-	delay(60000);
+	//delay(60000);
 
         // Delay for 5 seconds
         //delay(5000);
+
+        // Delay for 5 minutes
+        delay(60000 * 5);
+
 }
 
 void
