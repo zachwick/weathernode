@@ -27,13 +27,19 @@
 #include "HTU21D.h" // Humidity Sensor
 
 // MAC Address for the weathernode
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+// MAC addresses are _suppossed_ to be globally unique, and are tied
+// to the networking hardware of the weathernode. The values below
+// should be changed to the MAC address of the hardware that you are
+// flashing - it doesn't need to be, but it should be. Have fun making
+// words with hexadecimal values like the commented example. 
+// byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+byte mac[] = { 0x90, 0xA2, 0xDA, 0x0F, 0x4B, 0xD0 };
 String mac_string = "90A2DA0F4BD0";
 
 // IP Address for the weathernode
 // This will be used if the weathernode does not get an IP
 // from a DHCP server on the network.
-IPAddress ip(192, 168, 1, 103);
+//IPAddress ip(192, 168, 1, 103);
 
 // IP Address of the ShopNet server
 // In zwick's shop, the server has the following IP address
